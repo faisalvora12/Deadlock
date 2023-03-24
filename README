@@ -1,0 +1,24 @@
++++++++++++++++++  Part 1:    +++++++++++++++++
+---------------------------------------------------------------------------
+ 
+In step 3 we obtained a random number of A's B's and C's.There was no pattern to the output. In step 5 the printC function never returns from an infinite loop, so the  other threads are not created. 
+-----------------------------------------------------------------------------
+
+++++++++++++++   Part3:   ++++++++++++++++++++++++
+--------------------------------------------------------------------------
+                                |System time |  User time |  Real time |
+--------------------------------------------------------------------------
+                                |            |            |            | 
+pthread_mutex(count)            | 2.85s      |  3.80s     |     3.392s |
+				|	     | 	          |            |
+spin lock(count_spin with thr)  | 0.20s      |  0.66s     |     0.486s |
+				|	     |            |            |
+spinlock(count_spin without thr)| 0.00s      |  5.15s     |     2.652s |
+                                |            |            |            |      
+--------------------------------------------------------------------------
+1. Without the thr_yield the thread only runs in user space whereas with the thryield the program runs in kernel mode. This causes the difference in the time. 
+
+----------------------------------------------------------------------------
+2. The system time is less for spin lock and more for mutex lock. The problem with mutexes is that putting threads to sleep and waking them up again are both rather expensive operations, they'll need quite a lot of CPU instructions and thus also take some time. 
+
+----------------------------------------------------------------------------
