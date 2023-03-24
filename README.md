@@ -1,1 +1,1 @@
-# Simple_Lex_Yacc
+Simple Deadlock project
